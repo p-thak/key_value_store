@@ -42,6 +42,18 @@ public class Client {
 //        claimRoute(serverHost, serverPort);
     }
 
+    public boolean testPost(String serverHost,String serverPort,String command, String key, String value) {
+        testPosted = false;
+        postToServer(serverHost,serverPort,command,key,value);
+
+        return testPosted;
+    }
+
+    public String testGet(String serverHost,String serverPort,String command,String key) {
+        testGet = "null";
+        getFromServer(serverHost,serverPort,command,key);
+        return testGet;
+    }
 
 
     private static void getFromServer(String serverHost,String serverPort,String command,String key) {
@@ -59,10 +71,13 @@ public class Client {
             if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
                 InputStream respBody = http.getInputStream();
-
-                String respData = readString(respBody);
-                testGet = respData;
-                System.out.println(respData);
+                if (respBody.available() == 0) {
+                    System.out.println("No key named " + key + " found.");
+                } else {
+                    String respData = readString(respBody);
+                    testGet = respData;
+                    System.out.println(respData);
+                }
             }
             else {
                 System.out.println("ERROR: " + http.getResponseMessage());
@@ -71,19 +86,6 @@ public class Client {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean testPost(String serverHost,String serverPort,String command, String key, String value) {
-        testPosted = false;
-        postToServer(serverHost,serverPort,command,key,value);
-
-        return testPosted;
-    }
-
-    public String testGet(String serverHost,String serverPort,String command,String key) {
-        testGet = "null";
-        getFromServer(serverHost,serverPort,command,key);
-        return testGet;
     }
 
     private static void postToServer(String serverHost, String serverPort, String command, String key, String value) {

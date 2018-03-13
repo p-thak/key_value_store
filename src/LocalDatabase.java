@@ -22,13 +22,11 @@ public class LocalDatabase {
 
     public boolean fileIsCreated() {
         String currentPath = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("CURRENT RELATIVE PATH IS: "+currentPath);;
         PATH = currentPath+PATH;
         File f = new File(PATH);
         if (f.exists()) {
             return true;
         }
-        System.out.println("FILE IS "+f.getAbsolutePath());
         return false;
     }
 
@@ -39,20 +37,4 @@ public class LocalDatabase {
         }
     }
 
-//    public static void main(String... args) throws Exception {
-//        LocalDatabase xd = new LocalDatabase();
-//
-//        // Populate and save our HashMap
-//        HashMap<String, Integer> users = new HashMap<>();
-//        users.put("David Minesote", 11);
-//        users.put("Sean Bright", 22);
-//        users.put("Tom Overflow", 33);
-//
-//        xd.saveFile(info);
-//
-//        // Read our HashMap back into memory and print it out
-//        HashMap<String, Integer> restored = xd.readFile();
-//
-//        System.out.println(restored);
-//    }
 }
